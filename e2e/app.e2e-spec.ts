@@ -1,6 +1,6 @@
 import { AppPage } from './app.po';
 
-describe('shelter-sherpa App', () => {
+describe('material-design-template App', () => {
   let page: AppPage;
 
   beforeEach(() => {
