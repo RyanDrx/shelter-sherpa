@@ -18,14 +18,14 @@ import { rotateIn, zoomIn } from 'ng-animate';
       state('active', style({})),
       transition(
         '* => active',
-        useAnimation(rotateIn, {
+        useAnimation(zoomIn, {
           params: { timing: 0.3 }
         })
       ),
       state('inactive', style({})),
       transition(
         '* => inactive',
-        useAnimation(zoomIn, {
+        useAnimation(rotateIn, {
           params: { timing: 0.3 }
         })
       )
@@ -61,8 +61,8 @@ export class AppComponent implements OnDestroy {
     this.mobileQuery.addListener(this._mobileQueryListener);
   }
 
-  toggleState() {
-    this.state = this.state === 'active' ? 'inactive' : 'active';
+  toggleState(navOpen: boolean) {
+    this.state = navOpen ? 'inactive' : 'active';
   }
 
   ngOnDestroy(): void {
