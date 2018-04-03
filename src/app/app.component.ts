@@ -38,10 +38,6 @@ export class AppComponent implements OnDestroy {
   title = 'app';
   mobileQuery: MediaQueryList;
 
-  fillerNav = Array(10)
-    .fill(0)
-    .map((_, i) => `Nav Item ${i + 1}`);
-
 
   private _mobileQueryListener: () => void;
 

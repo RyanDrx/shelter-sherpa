@@ -12,9 +12,10 @@ import { MaterialModule } from './modules/material.module';
 
 import { AppComponent } from './app.component';
 import { HomeComponent } from './home/home.component';
+import { SidenavComponent } from './sidenav/sidenav.component';
 
 @NgModule({
-  declarations: [AppComponent, HomeComponent],
+  declarations: [AppComponent, HomeComponent, SidenavComponent],
   imports: [
     BrowserModule,
     BrowserAnimationsModule,
