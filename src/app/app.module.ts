@@ -5,12 +5,16 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { platformBrowserDynamic } from '@angular/platform-browser-dynamic';
 import { MediaMatcher } from '@angular/cdk/layout';
+import { RouterModule, Routes } from '@angular/router';
+
+import { routes } from './modules/routes.module';
+import { MaterialModule } from './modules/material.module';
 
 import { AppComponent } from './app.component';
-import { MaterialModule } from './material.module';
+import { HomeComponent } from './home/home.component';
 
 @NgModule({
-  declarations: [AppComponent],
+  declarations: [AppComponent, HomeComponent],
   imports: [
     BrowserModule,
     BrowserAnimationsModule,
@@ -18,6 +22,7 @@ import { MaterialModule } from './material.module';
     FormsModule,
     ReactiveFormsModule,
     HttpClientModule,
+    RouterModule.forRoot(routes, { useHash: true }),
   ],
   providers: [MediaMatcher],
   bootstrap: [AppComponent]
