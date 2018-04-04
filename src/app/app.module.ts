@@ -13,9 +13,10 @@ import { MaterialModule } from './modules/material.module';
 import { AppComponent } from './app.component';
 import { HomeComponent } from './home/home.component';
 import { SidenavComponent } from './sidenav/sidenav.component';
+import { GridComponent } from './grid/grid.component';
 
 @NgModule({
-  declarations: [AppComponent, HomeComponent, SidenavComponent],
+  declarations: [AppComponent, HomeComponent, SidenavComponent, GridComponent],
   imports: [
     BrowserModule,
     BrowserAnimationsModule,

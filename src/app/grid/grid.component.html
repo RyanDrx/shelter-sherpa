@@ -1,0 +1,37 @@
+<mat-grid-list cols="3" rowHeight="1:1.15">
+  <mat-grid-tile *ngFor="let item of fillerGrid">
+    <mat-card style="margin:9px;">
+      <mat-card-header>
+        <mat-card-title> Card Title</mat-card-title>
+        <img mat-card-avatar src="https://i.imgur.com/gWwx2zR.jpg">
+        <mat-card-subtitle> Card Subtitle - {{item}}</mat-card-subtitle>
+      </mat-card-header>
+      <img mat-card-image src="https://i.imgur.com/5Lsq3CE.jpg"  style="width: 100%;"  alt="Photo of a Shiba Inu">
+      <mat-card-content>
+       <p>
+          <ul>
+          <li>
+            Lorem ipsum dolor sit amet
+          </li>
+          <li>
+            consectetur adipiscing elit
+          </li>
+          <li>
+            labore et dolore magna aliqua
+          </li>
+        </ul>
+      </mat-card-content>
+      <mat-card-actions>
+        <button mat-icon-button>
+          <mat-icon>pets</mat-icon>
+        </button>
+        <button mat-icon-button>
+          <mat-icon>share</mat-icon>
+        </button>
+        <button mat-icon-button>
+          <mat-icon>help</mat-icon>
+        </button>
+      </mat-card-actions>
+    </mat-card>
+  </mat-grid-tile>
+</mat-grid-list>
