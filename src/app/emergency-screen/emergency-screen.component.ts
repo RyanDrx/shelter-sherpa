@@ -1,42 +1,91 @@
+
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import {
+  FormBuilder,
+  FormGroup,
+  Validators,
+  AbstractControl
+} from '@angular/forms';
+import { EmergencyScreen } from '../modules/emergency-screen';
+import { FormValues } from './../FormValues';
+
 
 @Component({
   selector: 'app-emergency-screen',
   templateUrl: './emergency-screen.component.html',
   styleUrls: ['./emergency-screen.component.css']
 })
-export class EmergencyScreenComponent implements OnInit {
-  isLinear = false;
-  firstFormGroup: FormGroup;
-  secondFormGroup: FormGroup;
-  thirdFormGroup: FormGroup;
-  fourthFormGroup: FormGroup;
-  fifthFormGroup: FormGroup;
+export class EmergencyScreenComponent {
+  public isLinear = false;
+  public ScreenFormGroup: FormGroup;
+  public emergencyScreen: EmergencyScreen;
+  public formValues = new FormValues();
 
-  public contactMethods = [
-    { value: 'phone-0', viewValue: 'phone' },
-    { value: 'email-1', viewValue: 'email' },
-    { value: 'person-2', viewValue: 'in person' }
-  ];
+  get formArray(): AbstractControl | null {
+    return this.ScreenFormGroup.get('formArray');
+  }
+  public dateNow = new Date();
 
-  constructor(private _formBuilder: FormBuilder) {}
 
-  ngOnInit() {
-    this.firstFormGroup = this._formBuilder.group({
-      firstCtrl: ['', Validators.required]
+  constructor(private _formBuilder: FormBuilder) {
+    this.createForm();
+  }
+
+  createForm() {
+    this.ScreenFormGroup = this._formBuilder.group({
+      FesaID: ['', Validators.required],
+      ContactMethod: '',
+      ScreenDate: '',
+      GeneralNotes: ''
+      // Guardians: this._formBuilder.group({
+      //   LastName: '',
+      //   FirstName: '',
+      //   MiddleName: '',
+      //   MaidenName: '',
+      //   Alias: '',
+      //   DOB: '',
+      //   Gender: ''
+      // })
     });
-    this.secondFormGroup = this._formBuilder.group({
-      secondCtrl: ['', Validators.required]
+  }
+
+  onSubmit() {
+    this.emergencyScreen = this.prepareEmergencyScreen();
+    // this.screenService.updateHero(this.emergencyScreen).subscribe(/* error handling */);
+    this.rebuildForm();
+  }
+  rebuildForm() {
+    this.ScreenFormGroup.reset({
+      FesaID: ''
     });
-    this.thirdFormGroup = this._formBuilder.group({
-      secondCtrl: ['', Validators.required]
-    });
-    this.fourthFormGroup = this._formBuilder.group({
-      secondCtrl: ['', Validators.required]
-    });
-    this.fifthFormGroup = this._formBuilder.group({
-      secondCtrl: ['', Validators.required]
-    });
+  }
+
+  revert() {
+    this.rebuildForm();
+  }
+
+  prepareEmergencyScreen(): EmergencyScreen {
+    const formModel = this.ScreenFormGroup.value;
+
+    // deep copy of form model
+    // const children: Child[] = formModel.guardians.map((child: Child) =>
+    //   Object.assign({}, Child)
+    // );
+
+    // // deep copy of form model
+    // const guardians: ParentGuardian[] = formModel.guardians.map(
+    //   (parentGuardian: ParentGuardian) => Object.assign({}, parentGuardian)
+    // );
+
+    const saveEmergencyScreen: EmergencyScreen = {
+      FesaID: formModel.FesaID,
+      ContactMethod: formModel.ContactMethod as string,
+      ScreenDate: formModel.ScreenDate,
+      // Guardians: guardians,
+      // Children: children,
+      GeneralNotes: formModel.GeneralNotes
+    };
+
+    return saveEmergencyScreen;
   }
 }

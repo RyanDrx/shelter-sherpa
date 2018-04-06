@@ -4,11 +4,15 @@
       <mat-icon *ngIf="!snav.opened" [@rotate]="state">menu</mat-icon>
       <mat-icon *ngIf="snav.opened" [@rotate]="state">arrow_back</mat-icon>
     </button>
-    <h1 class="main-app-name">Shelter Sherpa
-      <span>
-        <img src="/assets/sherpa-image-test.png" style="height: 41px; margin-bottom: -13px;">
+
+    <h1 class="main-app-name">
+      <span  style="cursor: pointer;" routerLink="home">Shelter Sherpa
+        <span>
+          <img src="/assets/sherpa-image-test.png" style="height: 41px; margin-bottom: -13px;">
+        </span>
       </span>
     </h1>
+
   </mat-toolbar>
 
   <mat-sidenav-container class="main-sidenav-container" [style.marginTop.px]="mobileQuery.matches ? 56 : 0">

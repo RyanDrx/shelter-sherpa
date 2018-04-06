@@ -1,0 +1,11 @@
+.right {
+  float: right;
+}
+.form-actions {
+  height: 35px;
+  width: 100%;
+  margin-top: 15px;
+}
+mat-form-field{
+width: 44%
+}
