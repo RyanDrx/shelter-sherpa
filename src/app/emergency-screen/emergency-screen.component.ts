@@ -6,7 +6,7 @@ import {
   Validators,
   AbstractControl
 } from '@angular/forms';
-import { EmergencyScreen } from '../modules/emergency-screen';
+import { EmergencyScreen } from '../models/emergency-screen';
 import { FormValues } from './../FormValues';
 
 
