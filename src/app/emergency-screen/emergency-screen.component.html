@@ -1,0 +1,175 @@
+<mat-horizontal-stepper [linear]="isLinear" #stepper="matHorizontalStepper">
+  <mat-step [stepControl]="firstFormGroup">
+    <form [formGroup]="firstFormGroup">
+      <ng-template matStepLabel>Basic Info</ng-template>
+      <div>
+        <mat-form-field>
+          <input matInput placeholder="FESA Identifier" formControlName="firstCtrl" required>
+        </mat-form-field>
+      </div>
+      <div>
+        <mat-form-field>
+          <mat-select placeholder="Best Way to Contact" formControlName="firstCtrl">
+            <mat-option *ngFor="let method of contactMethods" [value]="method.value">
+              {{ method.viewValue }}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+      <div>
+        <button mat-raised-button color="accent" matStepperNext>Next</button>
+      </div>
+    </form>
+  </mat-step>
+  <mat-step [stepControl]="secondFormGroup">
+    <form [formGroup]="secondFormGroup">
+      <ng-template matStepLabel>Parent/Guardian</ng-template>
+      <div>
+        <mat-form-field>
+          <input matInput placeholder="Last Name" formControlName="secondCtrl" required>
+        </mat-form-field>
+      </div>
+      <div>
+        <mat-form-field>
+          <input matInput placeholder="First Name" formControlName="secondCtrl" required>
+        </mat-form-field>
+      </div>
+      <div>
+        <mat-form-field>
+          <input matInput placeholder="Middle Name" formControlName="secondCtrl">
+        </mat-form-field>
+      </div>
+      <div>
+        <mat-form-field>
+          <input matInput placeholder="Maiden Name / Alias" formControlName="secondCtrl">
+        </mat-form-field>
+      </div>
+
+      <div>
+        <button mat-raised-button color="accent" matStepperPrevious>Back</button>
+        <button mat-raised-button color="accent" matStepperNext>Next</button>
+      </div>
+    </form>
+  </mat-step>
+  <mat-step [stepControl]="thirdFormGroup">
+    <form [formGroup]="thirdFormGroup">
+      <ng-template matStepLabel>Children</ng-template>
+
+      <div>
+        <mat-form-field>
+          <input matInput placeholder="Last Name" required>
+        </mat-form-field>
+      </div>
+      <div>
+        <mat-form-field>
+          <input matInput placeholder="First Name" required>
+        </mat-form-field>
+      </div>
+      <div>
+        <mat-form-field>
+          <input matInput placeholder="Middle Name" required>
+        </mat-form-field>
+      </div>
+      <div>
+        <mat-form-field>
+          <input matInput placeholder="DOB" [matDatepicker]="myDatepicker">
+          <mat-datepicker-toggle matSuffix [for]="myDatepicker"></mat-datepicker-toggle>
+          <mat-datepicker #myDatepicker></mat-datepicker>
+        </mat-form-field>
+      </div>
+
+      <div>
+        <button mat-raised-button color="accent" matStepperPrevious>Back</button>
+        <button mat-raised-button color="accent" matStepperNext>Next</button>
+      </div>
+    </form>
+  </mat-step>
+  <mat-step [stepControl]="fourthFormGroup">
+    <form [formGroup]="fourthFormGroup">
+      <ng-template matStepLabel>Living Situation</ng-template>
+      <div>
+        <label>Unsheltered? </label>
+        <mat-radio-group>
+          <mat-radio-button value="Yes">Yes</mat-radio-button>
+          <mat-radio-button value="No">No</mat-radio-button>
+        </mat-radio-group>
+      </div>
+      <div>
+        <label>Can you find a place for a couple of nights? </label>
+        <mat-radio-group>
+          <mat-radio-button value="Yes">Yes</mat-radio-button>
+          <mat-radio-button value="No">No</mat-radio-button>
+        </mat-radio-group>
+      </div>
+      <div>
+        <label>Do you have money for a hotel? </label>
+        <mat-radio-group>
+          <mat-radio-button value="Yes">Yes</mat-radio-button>
+          <mat-radio-button value="No">No</mat-radio-button>
+        </mat-radio-group>
+      </div>
+      <mat-form-field>
+        <input matInput placeholder="How long have you been Homeless?"> days
+      </mat-form-field>
+      <mat-form-field>
+        <input matInput placeholder="Where are you right now?">
+      </mat-form-field>
+      <mat-form-field>
+        <input matInput placeholder="Where did you stay last night?">
+      </mat-form-field>
+      <div>
+        <button mat-raised-button color="accent" matStepperPrevious>Back</button>
+        <button mat-raised-button color="accent" matStepperNext>Next</button>
+      </div>
+    </form>
+  </mat-step>
+  <mat-step [stepControl]="fifthFormGroup">
+    <form [formGroup]="fifthFormGroup">
+      <ng-template matStepLabel>Specific Needs</ng-template>
+      <div>
+        <label>Current Pregnancy? </label>
+        <mat-radio-group>
+          <mat-radio-button value="Yes">Yes</mat-radio-button>
+          <mat-radio-button value="No">No</mat-radio-button>
+        </mat-radio-group>
+      </div>
+      <div>
+        <label>Pets or other animals? </label>
+        <mat-radio-group>
+          <mat-radio-button value="Yes">Yes</mat-radio-button>
+          <mat-radio-button value="No">No</mat-radio-button>
+        </mat-radio-group>
+        <mat-form-field>
+          <input matInput placeholder="If so, What?">
+        </mat-form-field>
+      </div>
+      <div>
+        <mat-form-field>
+          <input matInput placeholder="Any mental Or physical disabilities?">
+        </mat-form-field>
+      </div>
+      <div>
+        <label>Pets or other animals? </label>
+        <mat-radio-group>
+          <mat-radio-button value="Yes">Yes</mat-radio-button>
+          <mat-radio-button value="No">No</mat-radio-button>
+        </mat-radio-group>
+        <mat-form-field>
+          <input matInput placeholder="If so, please describe">
+        </mat-form-field>
+      </div>
+      <div>
+        <button mat-raised-button color="accent" matStepperPrevious>Back</button>
+        <button mat-raised-button color="accent" matStepperNext>Next</button>
+      </div>
+    </form>
+  </mat-step>
+  <mat-step>
+    <ng-template matStepLabel>Done</ng-template>
+    You are now done.
+    <div>
+      <button mat-raised-button color="accent" matStepperPrevious>Back</button>
+      <button mat-raised-button color="accent" (click)="stepper.reset()">Reset</button>
+    </div>
+  </mat-step>
+</mat-horizontal-stepper>

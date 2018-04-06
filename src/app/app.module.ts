@@ -13,10 +13,11 @@ import { MaterialModule } from './modules/material.module';
 import { AppComponent } from './app.component';
 import { HomeComponent } from './home/home.component';
 import { SidenavComponent } from './sidenav/sidenav.component';
-import { GridComponent } from './grid/grid.component';
+import { EmergencyScreenComponent } from './emergency-screen/emergency-screen.component';
+import { SearchComponent } from './search/search.component';
 
 @NgModule({
-  declarations: [AppComponent, HomeComponent, SidenavComponent, GridComponent],
+  declarations: [AppComponent, HomeComponent, SidenavComponent, EmergencyScreenComponent, SearchComponent],
   imports: [
     BrowserModule,
     BrowserAnimationsModule,

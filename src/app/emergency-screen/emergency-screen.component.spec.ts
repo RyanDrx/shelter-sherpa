@@ -1,20 +1,20 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { GridComponent } from './grid.component';
+import { EmergencyScreenComponent } from './emergency-screen.component';
 
-describe('GridComponent', () => {
-  let component: GridComponent;
-  let fixture: ComponentFixture<GridComponent>;
+describe('EmergencyScreenComponent', () => {
+  let component: EmergencyScreenComponent;
+  let fixture: ComponentFixture<EmergencyScreenComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ GridComponent ]
+      declarations: [ EmergencyScreenComponent ]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(GridComponent);
+    fixture = TestBed.createComponent(EmergencyScreenComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

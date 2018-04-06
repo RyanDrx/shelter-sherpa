@@ -4,7 +4,11 @@
       <mat-icon *ngIf="!snav.opened" [@rotate]="state">menu</mat-icon>
       <mat-icon *ngIf="snav.opened" [@rotate]="state">arrow_back</mat-icon>
     </button>
-    <h1 class="main-app-name">Material Design Template</h1>
+    <h1 class="main-app-name">Shelter Sherpa
+      <span>
+        <img src="/assets/sherpa-image-test.png" style="height: 41px; margin-bottom: -13px;">
+      </span>
+    </h1>
   </mat-toolbar>
 
   <mat-sidenav-container class="main-sidenav-container" [style.marginTop.px]="mobileQuery.matches ? 56 : 0">
