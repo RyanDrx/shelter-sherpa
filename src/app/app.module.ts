@@ -31,5 +31,3 @@ import { SearchComponent } from './search/search.component';
   bootstrap: [AppComponent]
 })
 export class AppModule {}
-
-platformBrowserDynamic().bootstrapModule(AppModule);
