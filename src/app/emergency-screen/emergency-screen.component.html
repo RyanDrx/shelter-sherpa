@@ -1,25 +1,186 @@
 <h1>New Profile</h1>
 
+<form [formGroup]="ScreenFormGroup" (ngSubmit)="onSubmit()">
+  <mat-card>
+    <mat-card-content>
+      <div #Details>
+        <div class="form-section-header">
+          <h2> Details </h2>
+        </div>
+        <div class="form-content">
+          <div>
+            <mat-form-field>
+              <input matInput placeholder="FESA Identifier" formControlName="FesaID" required>
+            </mat-form-field>
 
-<mat-card>
-  <mat-card-content>
-    <h2> Details </h2>
-    <form [formGroup]="ScreenFormGroup" (ngSubmit)="onSubmit()">
-      <div class="form-content">
+            <mat-form-field>
+              <input matInput [matDatepicker]="myDatepicker" placeholder="Screen Date" formControlName="ScreenDate">
+              <mat-datepicker-toggle matSuffix [for]="myDatepicker"></mat-datepicker-toggle>
+              <mat-datepicker #myDatepicker></mat-datepicker>
+            </mat-form-field>
+
+            <mat-form-field>
+              <mat-select placeholder="Best Way to Contact" formControlName="ContactMethod">
+                <mat-option *ngFor="let method of formValues.contactMethods" [value]="method.value">
+                  {{ method.viewValue }}
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
+          </div>
+        </div>
+      </div>
+
+      <mat-divider></mat-divider>
+
+      <div #ParentsAndGuardians>
+        <div formArrayName="parentGuardians">
+          <div class="form-section-header">
+            <h2>Parents/Guardian(s)</h2>
+          </div>
+          <div class="form-content">
+            <div *ngFor="let g of parentGuardians.controls; let i = index" [formGroupName]="i">
+              <div>
+                <h4>Parent/Guardian {{i + 1}}</h4>
+                <div>
+                  <mat-form-field>
+                    <input matInput placeholder="First Name" formControlName="FirstName">
+                  </mat-form-field>
+                  <mat-form-field>
+                    <input matInput placeholder="Middle Name" formControlName="MiddleName">
+                  </mat-form-field>
+                  <mat-form-field>
+                    <input matInput placeholder="Last Name" formControlName="LastName">
+                  </mat-form-field>
+                </div>
+                <div>
+                  <mat-form-field>
+                    <input matInput placeholder="Maiden Name/Alias" formControlName="MaidenNameAlias">
+                  </mat-form-field>
+                  <mat-form-field>
+                    <input matInput [matDatepicker]="id" placeholder="Date of Birth" formControlName="DOB">
+                    <mat-datepicker-toggle matSuffix [for]="id"></mat-datepicker-toggle>
+                    <mat-datepicker #id></mat-datepicker>
+                  </mat-form-field>
+                  <mat-form-field>
+                    <input matInput placeholder="Gender" formControlName="Gender">
+                  </mat-form-field>
+                </div>
+              </div>
+            </div>
+            <span class="add-button">
+              <button type="button" (click)="addGuardian()" mat-button color="accent">Add Parent/Guardian</button>
+            </span>
+          </div>
+        </div>
+      </div>
+
+      <mat-divider></mat-divider>
+      <div #ChildrenGroup>
+        <div formArrayName="children">
+          <div class="form-section-header">
+            <h2>Children</h2>
+          </div>
+          <div class="form-content">
+            <div *ngFor="let ch of children.controls; let t = index" [formGroupName]="t">
+              <div>
+                <h4>Child {{t + 1}}:</h4>
+                <div>
+                  <mat-form-field>
+                    <input matInput placeholder="First Name" formControlName="FirstName">
+                  </mat-form-field>
+
+                  <mat-form-field>
+                    <input matInput placeholder="Last Name" formControlName="LastName">
+                  </mat-form-field>
+
+                  <mat-form-field>
+                    <input matInput [matDatepicker]="idc" placeholder="Date of Birth" formControlName="DOB">
+                    <mat-datepicker-toggle matSuffix [for]="idc"></mat-datepicker-toggle>
+                    <mat-datepicker #idc></mat-datepicker>
+                  </mat-form-field>
+                </div>
+                <div>
+                  <mat-form-field>
+                    <input matInput placeholder="Gender" formControlName="Gender">
+                  </mat-form-field>
+                  <mat-form-field>
+                    <input matInput placeholder="School District" formControlName="School">
+                  </mat-form-field>
+                </div>
+              </div>
+            </div>
+            <span class="add-button">
+              <button type="button" (click)="addChild()" mat-button color="accent">Add Child</button>
+            </span>
+          </div>
+        </div>
+      </div>
+
+      <mat-divider></mat-divider>
+
+      <div #LivingSituation>
+        <div class="form-section-header">
+          <h2> Living Situation </h2>
+        </div>
+        <div class="form-content">
+          <div>
+            <mat-form-field class="half-width">
+              <mat-select placeholder="Are you currently Unsheltered? " formControlName="Unsheltered">
+                <mat-option *ngFor="let method of formValues.YesNo" [value]="method.value">
+                  {{ method.viewValue }}
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
+            <p>
+              How long have you been homeless?
+            </p>
+            <div>
+              <mat-slider style="width: 28%" #slider max="100" min="0" step="1" >
+              </mat-slider>
+              <span style="margin-top: -25px;">
+                <mat-form-field style="width:25px;">
+                  <input matInput #sliderInput value='{{slider.value}}' disabled formControlName="CurrentLocation" formControlName="HomelessLength">
+                </mat-form-field>
+
+                <mat-form-field style="width:95px; margin-left: -12px;">
+                  <mat-select formControlName="HomelessLengthType">
+                    <mat-option *ngFor="let method of formValues.lengthType" [value]="method.value">
+                      {{ method.viewValue }}
+                    </mat-option>
+                  </mat-select>
+                </mat-form-field>
+              </span>
+            </div>
+
+          </div>
+          <div>
+            <mat-form-field class="half-width">
+              <input matInput placeholder="Where are you right now? (Area of King County)" formControlName="CurrentLocation">
+            </mat-form-field>
+            <mat-form-field class="half-width">
+              <input matInput placeholder="When do you have to leave?" formControlName="WhenToLeaveCurrent">
+            </mat-form-field>
+          </div>
+          <div>
+            <mat-form-field class="half-width">
+              <input matInput placeholder="Where did you stay last night? (Type of Residence)" formControlName="YesterdayLocation">
+            </mat-form-field>
+            <mat-form-field class="half-width">
+              <input matInput placeholder="Why did you have to leave the place you stayed last night?" formControlName="LeaveYesterdayLocationReason">
+            </mat-form-field>
+          </div>
+        </div>
         <div>
-          <mat-form-field>
-            <input matInput placeholder="FESA Identifier" formControlName="FesaID" required>
+          <mat-form-field class="half-width">
+            <mat-select placeholder="Can you find a place to stay for a couple of nights?  " formControlName="PlaceToStay">
+              <mat-option *ngFor="let method of formValues.YesNo" [value]="method.value">
+                {{ method.viewValue }}
+              </mat-option>
+            </mat-select>
           </mat-form-field>
-
-          <mat-form-field>
-            <input matInput [matDatepicker]="myDatepicker" placeholder="Screen Date" formControlName="ScreenDate">
-            <mat-datepicker-toggle matSuffix [for]="myDatepicker"></mat-datepicker-toggle>
-            <mat-datepicker #myDatepicker></mat-datepicker>
-          </mat-form-field>
-
-          <mat-form-field>
-            <mat-select placeholder="Best Way to Contact" formControlName="ContactMethod">
-              <mat-option *ngFor="let method of formValues.contactMethods" [value]="method.value">
+          <mat-form-field class="half-width">
+            <mat-select placeholder="Do you have money for a hotel?" formControlName="HotelMoney">
+              <mat-option *ngFor="let method of formValues.YesNo" [value]="method.value">
                 {{ method.viewValue }}
               </mat-option>
             </mat-select>
@@ -27,100 +188,160 @@
         </div>
       </div>
 
-
       <mat-divider></mat-divider>
 
-      <div formArrayName="parentGuardians">
+      <div #SpecificNeeds>
         <div class="form-section-header">
-          <h2>Parents/Guardian(s)</h2>
+          <h2> Specific Needs </h2>
         </div>
         <div class="form-content">
-          <div *ngFor="let g of parentGuardians.controls; let i = index" [formGroupName]="i">
-            <div>
-              <h4>Parent/Guardian {{i + 1}}</h4>
-              <div>
-                <mat-form-field>
-                  <input matInput placeholder="First Name" formControlName="FirstName">
-                </mat-form-field>
-                <mat-form-field>
-                  <input matInput placeholder="Middle Name" formControlName="MiddleName">
-                </mat-form-field>
-                <mat-form-field>
-                  <input matInput placeholder="Last Name" formControlName="LastName">
-                </mat-form-field>
-              </div>
-              <div>
-                <mat-form-field>
-                  <input matInput placeholder="Maiden Name/Alias" formControlName="MaidenNameAlias">
-                </mat-form-field>
-                <mat-form-field>
-                  <input matInput [matDatepicker]="id" placeholder="Date of Birth" formControlName="DOB">
-                  <mat-datepicker-toggle matSuffix [for]="id"></mat-datepicker-toggle>
-                  <mat-datepicker #id></mat-datepicker>
-                </mat-form-field>
-                <mat-form-field>
-                  <input matInput placeholder="Gender" formControlName="Gender">
-                </mat-form-field>
-              </div>
-            </div>
+          <div>
+            <mat-form-field >
+              <mat-select placeholder="Are you currently pregnant? " formControlName="Pregnancy">
+                <mat-option *ngFor="let method of formValues.YesNo" [value]="method.value">
+                  {{ method.viewValue }}
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
           </div>
-          <span class="add-button">
-            <button type="button" (click)="addGuardian()" mat-button color="accent">Add Parent/Guardian</button>
-          </span>
+          <div>
+            <mat-form-field>
+              <mat-select #pets placeholder="Do you have any pets or service animals? " formControlName="Pets">
+                <mat-option *ngFor="let method of formValues.YesNo" [value]="method.value">
+                  {{ method.viewValue }}
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
+            <mat-form-field class="half-width" *ngIf="ScreenFormGroup.get('Pets').value == true">
+              <input matInput placeholder="What type of pet(s) do you have?" formControlName="PetType">
+            </mat-form-field>
+          </div>
+          <div>
+            <mat-form-field>
+              <mat-select #disabilities placeholder="Does anyone in your family have disabilities? " formControlName="Disabilities">
+                <mat-option *ngFor="let method of formValues.YesNo" [value]="method.value">
+                  {{ method.viewValue }}
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
+            <mat-form-field class="half-width" *ngIf="ScreenFormGroup.get('Disabilities').value == true">
+              <input matInput placeholder="What type of disabilities?" formControlName="DisabilitiesDescription">
+            </mat-form-field>
+          </div>
+          <div>
+            <mat-form-field>
+              <mat-select #otherMedicalNeeds placeholder="Does anyone in your family have other medical needs? " formControlName="OtherMedicalNeeds">
+                <mat-option *ngFor="let method of formValues.YesNo" [value]="method.value">
+                  {{ method.viewValue }}
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
+            <mat-form-field class="half-width" *ngIf="ScreenFormGroup.get('OtherMedicalNeeds').value == true">
+              <input matInput placeholder="Other Needs" formControlName="OtherMedicalNeedsDescription">
+            </mat-form-field>
+          </div>
         </div>
       </div>
 
       <mat-divider></mat-divider>
 
-      <div formArrayName="children">
+      <div #DomesticViolence>
         <div class="form-section-header">
-          <h2>Children</h2>
+          <h2> Domestic Violence </h2>
         </div>
         <div class="form-content">
-          <div *ngFor="let ch of children.controls; let t = index" [formGroupName]="t">
-            <div>
-              <h4>Child {{t + 1}}:</h4>
-              <div>
-                <mat-form-field>
-                  <input matInput placeholder="First Name" formControlName="FirstName">
-                </mat-form-field>
-
-                <mat-form-field>
-                  <input matInput placeholder="Last Name" formControlName="LastName">
-                </mat-form-field>
-
-                <mat-form-field>
-                  <input matInput [matDatepicker]="idc" placeholder="Date of Birth" formControlName="DOB">
-                  <mat-datepicker-toggle matSuffix [for]="idc"></mat-datepicker-toggle>
-                  <mat-datepicker #idc></mat-datepicker>
-                </mat-form-field>
-              </div>
-              <div>
-                <mat-form-field>
-                  <input matInput placeholder="Gender" formControlName="Gender">
-                </mat-form-field>
-                <mat-form-field>
-                  <input matInput placeholder="School District" formControlName="School">
-                </mat-form-field>
-              </div>
-            </div>
+          <div>
+            <mat-form-field class="half-width">
+              <mat-select  #fleeingDV placeholder="Are you currently fleeing a partner/family member who is actively abusing or threatening you? "
+                formControlName="FleeingPartnerOrFamilyMember">
+                <mat-option *ngFor="let method of formValues.YesNo" [value]="method.value">
+                  {{ method.viewValue }}
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
+            <mat-form-field class="half-width" *ngIf="ScreenFormGroup.get('FleeingPartnerOrFamilyMember').value == true">
+              <mat-select #shelterContact placeholder="Have you called Domestic Violence shelters to access services? " formControlName="CalledDomesticViolenceShelters">
+                <mat-option *ngFor="let method of formValues.YesNo" [value]="method.value">
+                  {{ method.viewValue }}
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
           </div>
-          <span class="add-button">
-            <button type="button" (click)="addChild()" mat-button color="accent">Add Child</button>
-          </span>
+          <div>
+            <mat-form-field class="half-width" *ngIf="ScreenFormGroup.get('CalledDomesticViolenceShelters').value == true">
+              <input matInput placeholder="Which Shelter?" formControlName="DomesticViolenceShelter">
+            </mat-form-field>
+          </div>
         </div>
       </div>
 
-      <br />
-      <br />
       <mat-divider></mat-divider>
+
+      <div #AdditionalDetails>
+        <div class="form-section-header">
+          <h2> Additional Details </h2>
+        </div>
+        <div class="form-content">
+          <div>
+            <mat-form-field class="full-width">
+              <textarea matInput placeholder="Additional Notes" formControlName="GeneralNotes"></textarea>
+            </mat-form-field>
+          </div>
+          <div>
+            <mat-form-field>
+              <input matInput placeholder="Staff Name" formControlName="StaffMember" required>
+            </mat-form-field>
+          </div>
+        </div>
+      </div>
+
+    </mat-card-content>
+  </mat-card>
+
+  <br />
+
+  <div #ShelterSpecific>
+    <mat-expansion-panel>
+      <mat-expansion-panel-header style="background-color:#E0E0E0;">
+        <mat-panel-title>
+          <div>
+            <h3>Complete only if providing shelter.</h3>
+          </div>
+        </mat-panel-title>
+      </mat-expansion-panel-header>
+
+      <div #MedicalNeeds>
+        <div class="form-section-header">
+          <h2> Medical Needs </h2>
+        </div>
+        <div class="form-content">
+        </div>
+      </div>
+
+      <mat-divider></mat-divider>
+
+      <div #BackgroundCheck>
+        <div class="form-section-header">
+          <h2> Background Check </h2>
+        </div>
+        <div class="form-content">
+        </div>
+      </div>
+
+    </mat-expansion-panel>
+  </div>
+
+  <br />
+
+  <mat-card>
+    <mat-card-content>
       <div class="form-actions">
         <span class="center">
           <button type="submit" mat- [disabled]="ScreenFormGroup.pristine" mat-raised-button color="accent">Save</button> &nbsp;
           <button type="button" (click)="revert()" [disabled]="ScreenFormGroup.pristine" mat-raised-button color="warn">Revert</button>
         </span>
       </div>
-    </form>
-  </mat-card-content>
-</mat-card>
+    </mat-card-content>
+  </mat-card>
+</form>
 <p>Form value: {{ ScreenFormGroup.value | json}}</p>

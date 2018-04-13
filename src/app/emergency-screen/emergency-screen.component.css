@@ -10,8 +10,15 @@ mat-form-field {
 }
 .form-section-header {
   height: 45px;
+  margin-top: 30px;
 }
 
 .form-content{
   margin-top: 8px;
+}
+.half-width {
+  width: 46%;
+}
+.full-width {
+  width: 100%;
 }

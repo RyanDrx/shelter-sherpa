@@ -42,12 +42,32 @@ export class EmergencyScreenComponent implements OnChanges {
 
   createForm() {
     this.ScreenFormGroup = this._fb.group({
+      parentGuardians: this._fb.array([]),
+      children: this._fb.array([]),
       FesaID: ['', Validators.required],
       ContactMethod: '',
       ScreenDate: new Date(),
       GeneralNotes: '',
-      parentGuardians: this._fb.array([]),
-      children: this._fb.array([])
+      Unsheltered: false,
+      PlaceToStay: false,
+      HotelMoney: false,
+      HomelessLength: 0,
+      HomelessLengthType: 'days',
+      CurrentLocation: '',
+      WhenToLeaveCurrent: '',
+      YesterdayLocation: '',
+      LeaveYesterdayLocationReason: '',
+      Pregnancy: false,
+      Pets: false,
+      PetType: '',
+      Disabilities: false,
+      DisabilitiesDescription: '',
+      OtherMedicalNeeds: false,
+      OtherMedicalNeedsDescription: '',
+      FleeingPartnerOrFamilyMember: false,
+      CalledDomesticViolenceShelters: false,
+      DomesticViolenceShelter: '',
+      StaffMember: ''
     });
   }
 
@@ -105,7 +125,27 @@ export class EmergencyScreenComponent implements OnChanges {
       ScreenDate: formModel.ScreenDate,
       GeneralNotes: formModel.GeneralNotes,
       ParentGuardians: guardians,
-      Children: children
+      Children: children,
+      Unsheltered: formModel.Unsheltered,
+      PlaceToStay: formModel.PlaceToStay,
+      HotelMoney: formModel.HotelMoney,
+      HomelessLength: formModel.HomelessLength,
+      HomelessLengthType: formModel.HomelessLengthType,
+      CurrentLocation: formModel.CurrentLocation,
+      WhenToLeaveCurrent: formModel.WhenToLeaveCurrent,
+      YesterdayLocation: formModel.YesterdayLocation,
+      LeaveYesterdayLocationReason: formModel.LeaveYesterdayLocationReason,
+      Pregnancy: formModel.Pregnancy,
+      Pets: formModel.Pets,
+      PetType: formModel.PetType,
+      Disabilities: formModel.Disabilities,
+      DisabilitiesDescription: formModel.DisabilitiesDescription,
+      OtherMedicalNeeds: formModel.OtherMedicalNeeds,
+      OtherMedicalNeedsDescription: formModel.OtherMedicalNeedsDescription,
+      FleeingPartnerOrFamilyMember: formModel.FleeingPartnerOrFamilyMember,
+      CalledDomesticViolenceShelters: formModel.CalledDomesticViolenceShelters,
+      DomesticViolenceShelter: formModel.DomesticViolenceShelter,
+      StaffMember: formModel.StaffMember
     };
 
     return saveEmergencyScreen;
