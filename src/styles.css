@@ -11,3 +11,17 @@ body {
 mat-sidenav {
   width: 200px;
 }
+.center {
+  margin: 0 auto;
+}
+.right {
+  float: right;
+}
+.left {
+  float: left;
+}
+
+.add-button{
+  padding: 12px;
+  margin: 8px;
+}

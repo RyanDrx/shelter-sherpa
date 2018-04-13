@@ -1,11 +1,17 @@
-.right {
-  float: right;
-}
 .form-actions {
   height: 35px;
   width: 100%;
-  margin-top: 15px;
+  margin-top: 25px;
+  text-align: center;
 }
-mat-form-field{
-width: 44%
+mat-form-field {
+  width: 28%;
+  margin: 8px;
+}
+.form-section-header {
+  height: 45px;
+}
+
+.form-content{
+  margin-top: 8px;
 }

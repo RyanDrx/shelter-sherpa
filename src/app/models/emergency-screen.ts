@@ -1,12 +1,13 @@
 import { ParentGuardian } from './parent-guardian';
 import { Child } from './child';
+import { isDate } from 'util';
 
 export class EmergencyScreen {
-  // public Guardians: ParentGuardian[];
-  // public Children: Child[];
-  public FesaID: string;
-  public ScreenDate: Date;
-  public ContactMethod: string;
+  public ParentGuardians: ParentGuardian[];
+  public Children: Child[];
+  public FesaID = '';
+  public ScreenDate: Date = new Date;
+  public ContactMethod = '';
   // public Unsheltered: boolean;
   // public PlaceToStay: boolean;
   // public HotelMoney: boolean;

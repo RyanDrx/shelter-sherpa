@@ -1,11 +1,8 @@
 export class ParentGuardian {
-
-    public LastName: string;
-    public FirstName: string;
-    public MiddleName: string;
-    public MaidenName: string;
-    public Alias: string;
-    public DOB: Date;
-    public Gender: string;
-
+  public LastName = '';
+  public FirstName = '';
+  public MiddleName = '';
+  public MaidenNameAlias = '';
+  public DOB: Date = null;
+  public Gender = '';
 }

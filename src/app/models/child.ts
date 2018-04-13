@@ -1,7 +1,7 @@
 export class Child {
-  public FirstName: string;
-  public LastName: string;
-  public DOB: Date;
-  public Gender: string;
-  public School: string;
+  public FirstName = '';
+  public LastName = '';
+  public DOB: Date = null;
+  public Gender = '';
+  public School = '';
 }
