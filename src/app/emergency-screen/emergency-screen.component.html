@@ -3,14 +3,15 @@
 <form [formGroup]="ScreenFormGroup" (ngSubmit)="onSubmit()">
   <mat-card>
     <mat-card-content>
-      <div #Details>
+
+      <div class="question-section" #Details>
         <div class="form-section-header">
           <h2> Details </h2>
         </div>
         <div class="form-content">
           <div>
             <mat-form-field>
-              <input matInput placeholder="FESA Identifier" formControlName="FesaID" required>
+              <input matInput placeholder="FESA Identifier" autofocus formControlName="FesaID" required>
             </mat-form-field>
 
             <mat-form-field>
@@ -19,6 +20,8 @@
               <mat-datepicker #myDatepicker></mat-datepicker>
             </mat-form-field>
 
+          </div>
+          <div>
             <mat-form-field>
               <mat-select placeholder="Best Way to Contact" formControlName="ContactMethod">
                 <mat-option *ngFor="let method of formValues.contactMethods" [value]="method.value">
@@ -26,16 +29,31 @@
                 </mat-option>
               </mat-select>
             </mat-form-field>
+
+            <mat-form-field *ngIf="ScreenFormGroup.get('ContactMethod').value == 'phone'">
+              <input matInput placeholder="Phone Number" formControlName="Phone" type="tel">
+            </mat-form-field>
+
+            <mat-form-field *ngIf="ScreenFormGroup.get('ContactMethod').value == 'email'">
+              <input matInput placeholder="Email" formControlName="Email" type="email">
+            </mat-form-field>
           </div>
         </div>
       </div>
 
       <mat-divider></mat-divider>
 
-      <div #ParentsAndGuardians>
+      <div class="question-section" #ParentsAndGuardians>
         <div formArrayName="parentGuardians">
           <div class="form-section-header">
-            <h2>Parents/Guardian(s)</h2>
+            <div style="margin-top:15px;">
+              <h2 style="display: inline;">
+                Parent/Guardians
+              </h2>
+              <button type="button" style="float:right;" (click)="addGuardian()" mat-mini-fab color="accent">
+                <mat-icon>add</mat-icon>
+              </button>
+            </div>
           </div>
           <div class="form-content">
             <div *ngFor="let g of parentGuardians.controls; let i = index" [formGroupName]="i">
@@ -67,18 +85,23 @@
                 </div>
               </div>
             </div>
-            <span class="add-button">
-              <button type="button" (click)="addGuardian()" mat-button color="accent">Add Parent/Guardian</button>
-            </span>
           </div>
         </div>
       </div>
 
       <mat-divider></mat-divider>
-      <div #ChildrenGroup>
+
+      <div class="question-section" #ChildrenGroup>
         <div formArrayName="children">
           <div class="form-section-header">
-            <h2>Children</h2>
+            <div style="margin-top:20px;">
+              <h2 style="display: inline; ">
+                Children
+              </h2>
+              <button type="button" style="float:right;" (click)="addChild()" mat-mini-fab color="accent">
+                <mat-icon>add</mat-icon>
+              </button>
+            </div>
           </div>
           <div class="form-content">
             <div *ngFor="let ch of children.controls; let t = index" [formGroupName]="t">
@@ -86,7 +109,7 @@
                 <h4>Child {{t + 1}}:</h4>
                 <div>
                   <mat-form-field>
-                    <input matInput placeholder="First Name" formControlName="FirstName">
+                    <input matInput placeholder="First Name" autofocus formControlName="FirstName">
                   </mat-form-field>
 
                   <mat-form-field>
@@ -109,16 +132,13 @@
                 </div>
               </div>
             </div>
-            <span class="add-button">
-              <button type="button" (click)="addChild()" mat-button color="accent">Add Child</button>
-            </span>
           </div>
         </div>
       </div>
 
       <mat-divider></mat-divider>
 
-      <div #LivingSituation>
+      <div class="question-section" #LivingSituation>
         <div class="form-section-header">
           <h2> Living Situation </h2>
         </div>
@@ -135,7 +155,7 @@
               How long have you been homeless?
             </p>
             <div>
-              <mat-slider style="width: 28%" #slider max="100" min="0" step="1" >
+              <mat-slider style="width: 28%" #slider max="100" min="0" step="1">
               </mat-slider>
               <span style="margin-top: -25px;">
                 <mat-form-field style="width:25px;">
@@ -190,13 +210,13 @@
 
       <mat-divider></mat-divider>
 
-      <div #SpecificNeeds>
+      <div class="question-section" #SpecificNeeds>
         <div class="form-section-header">
           <h2> Specific Needs </h2>
         </div>
         <div class="form-content">
           <div>
-            <mat-form-field >
+            <mat-form-field>
               <mat-select placeholder="Are you currently pregnant? " formControlName="Pregnancy">
                 <mat-option *ngFor="let method of formValues.YesNo" [value]="method.value">
                   {{ method.viewValue }}
@@ -245,14 +265,14 @@
 
       <mat-divider></mat-divider>
 
-      <div #DomesticViolence>
+      <div class="question-section" #DomesticViolence>
         <div class="form-section-header">
           <h2> Domestic Violence </h2>
         </div>
         <div class="form-content">
           <div>
             <mat-form-field class="half-width">
-              <mat-select  #fleeingDV placeholder="Are you currently fleeing a partner/family member who is actively abusing or threatening you? "
+              <mat-select #fleeingDV placeholder="Are you currently fleeing a partner/family member who is actively abusing or threatening you? "
                 formControlName="FleeingPartnerOrFamilyMember">
                 <mat-option *ngFor="let method of formValues.YesNo" [value]="method.value">
                   {{ method.viewValue }}
@@ -277,7 +297,7 @@
 
       <mat-divider></mat-divider>
 
-      <div #AdditionalDetails>
+      <div class="question-section" #AdditionalDetails>
         <div class="form-section-header">
           <h2> Additional Details </h2>
         </div>

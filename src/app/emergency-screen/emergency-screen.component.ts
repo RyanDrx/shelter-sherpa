@@ -67,8 +67,11 @@ export class EmergencyScreenComponent implements OnChanges {
       FleeingPartnerOrFamilyMember: false,
       CalledDomesticViolenceShelters: false,
       DomesticViolenceShelter: '',
-      StaffMember: ''
+      StaffMember: '',
+      Phone: '',
+      Email: ''
     });
+    this.addGuardian();
   }
 
   onSubmit() {
@@ -145,7 +148,9 @@ export class EmergencyScreenComponent implements OnChanges {
       FleeingPartnerOrFamilyMember: formModel.FleeingPartnerOrFamilyMember,
       CalledDomesticViolenceShelters: formModel.CalledDomesticViolenceShelters,
       DomesticViolenceShelter: formModel.DomesticViolenceShelter,
-      StaffMember: formModel.StaffMember
+      StaffMember: formModel.StaffMember,
+      Phone: formModel.Phone,
+      Email: formModel.Email
     };
 
     return saveEmergencyScreen;

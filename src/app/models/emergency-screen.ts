@@ -10,6 +10,8 @@ export class EmergencyScreen {
   public ContactMethod = '';
   public GeneralNotes: string;
 
+  public Phone: string;
+  public Email: string;
   public Unsheltered: boolean;
   public PlaceToStay: boolean;
   public HotelMoney: boolean;
