@@ -1,4 +1,3 @@
-import { Child } from './../models/child';
 import { Component, OnInit, OnChanges } from '@angular/core';
 import {
   FormBuilder,
@@ -7,9 +6,12 @@ import {
   AbstractControl,
   FormArray
 } from '@angular/forms';
+
 import { EmergencyScreen } from '../models/emergency-screen';
 import { FormValues } from './../FormValues';
 import { ParentGuardian } from './../models/parent-guardian';
+import { ProfileService } from './../services/profile.service';
+import { Child } from './../models/child';
 
 @Component({
   selector: 'app-emergency-screen',
@@ -32,7 +34,10 @@ export class EmergencyScreenComponent implements OnChanges {
 
   public dateNow = new Date();
 
-  constructor(private _fb: FormBuilder) {
+  constructor(
+    private _fb: FormBuilder,
+    private _profileService: ProfileService
+  ) {
     this.createForm();
   }
 
@@ -76,7 +81,10 @@ export class EmergencyScreenComponent implements OnChanges {
 
   onSubmit() {
     this.emergencyScreen = this.prepareEmergencyScreen();
-    // this.screenService.updateHero(this.emergencyScreen).subscribe(/* error handling */);
+    this._profileService.createProfile(this.emergencyScreen).subscribe(e => {
+      console.log(e);
+    });
+
     this.rebuildForm();
   }
 
@@ -103,7 +111,6 @@ export class EmergencyScreenComponent implements OnChanges {
   rebuildForm() {
     this.ScreenFormGroup.reset();
     this.setGuardians([new ParentGuardian()]);
-    this.setChildren([new Child()]);
     console.log('rebuild form');
   }
 
@@ -150,7 +157,8 @@ export class EmergencyScreenComponent implements OnChanges {
       DomesticViolenceShelter: formModel.DomesticViolenceShelter,
       StaffMember: formModel.StaffMember,
       Phone: formModel.Phone,
-      Email: formModel.Email
+      Email: formModel.Email,
+      Status: 'Updated'
     };
 
     return saveEmergencyScreen;

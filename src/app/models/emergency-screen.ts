@@ -6,7 +6,7 @@ export class EmergencyScreen {
   public ParentGuardians: ParentGuardian[];
   public Children: Child[];
   public FesaID = '';
-  public ScreenDate: Date = new Date;
+  public ScreenDate: Date = new Date();
   public ContactMethod = '';
   public GeneralNotes: string;
 
@@ -32,4 +32,8 @@ export class EmergencyScreen {
   public CalledDomesticViolenceShelters: boolean;
   public DomesticViolenceShelter: string;
   public StaffMember: string;
+
+  public Status = 'New';
 }
+
+export const emergencyScreens: EmergencyScreen[] = [];

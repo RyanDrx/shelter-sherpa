@@ -9,12 +9,14 @@ import { RouterModule, Routes } from '@angular/router';
 
 import { routes } from './modules/routes.module';
 import { MaterialModule } from './modules/material.module';
+import { ProfileService } from './services/profile.service';
 
 import { AppComponent } from './app.component';
 import { HomeComponent } from './home/home.component';
 import { SidenavComponent } from './sidenav/sidenav.component';
 import { EmergencyScreenComponent } from './emergency-screen/emergency-screen.component';
 import { SearchComponent } from './search/search.component';
+
 
 @NgModule({
   declarations: [AppComponent, HomeComponent, SidenavComponent, EmergencyScreenComponent, SearchComponent],
@@ -28,6 +30,6 @@ import { SearchComponent } from './search/search.component';
     RouterModule.forRoot(routes, { useHash: true }),
   ],
   providers: [MediaMatcher],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent, ProfileService]
 })
 export class AppModule {}
