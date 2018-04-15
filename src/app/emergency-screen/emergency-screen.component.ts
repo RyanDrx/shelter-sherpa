@@ -23,6 +23,7 @@ export class EmergencyScreenComponent implements OnChanges {
   public ScreenFormGroup: FormGroup;
   public emergencyScreen: EmergencyScreen;
   public formValues = new FormValues();
+  public formEditable = false;
 
   get parentGuardians(): FormArray {
     return this.ScreenFormGroup.get('parentGuardians') as FormArray;

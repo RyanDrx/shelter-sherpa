@@ -1,6 +1,6 @@
 <h1>New Profile</h1>
 
-<form [formGroup]="ScreenFormGroup" (ngSubmit)="onSubmit()">
+<form [formGroup]="ScreenFormGroup" (ngSubmit)="onSubmit()" >
   <mat-card>
     <mat-card-content>
 
@@ -10,8 +10,8 @@
         </div>
         <div class="form-content">
           <div>
-            <mat-form-field>
-              <input matInput placeholder="FESA Identifier" autofocus formControlName="FesaID" required>
+            <mat-form-field >
+              <input matInput placeholder="FESA Identifier" autofocus formControlName="FesaID" required >
             </mat-form-field>
 
             <mat-form-field>

@@ -9,6 +9,7 @@ import { RouterModule, Routes } from '@angular/router';
 
 import { routes } from './modules/routes.module';
 import { MaterialModule } from './modules/material.module';
+
 import { ProfileService } from './services/profile.service';
 
 import { AppComponent } from './app.component';
@@ -29,7 +30,7 @@ import { SearchComponent } from './search/search.component';
     HttpClientModule,
     RouterModule.forRoot(routes, { useHash: true }),
   ],
-  providers: [MediaMatcher],
-  bootstrap: [AppComponent, ProfileService]
+  providers: [MediaMatcher, ProfileService],
+  bootstrap: [AppComponent]
 })
 export class AppModule {}

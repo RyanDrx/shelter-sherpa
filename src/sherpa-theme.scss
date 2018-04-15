@@ -1,0 +1,124 @@
+@import '~@angular/material/theming';
+// Plus imports for other components in your app.
+
+// Include the common styles for Angular Material. We include this here so that you only
+// have to load a single css file for Angular Material in your app.
+// Be sure that you only ever include this mixin once!
+@include mat-core();
+
+// Define the palettes for your theme using the Material Design palettes available in palette.scss
+// (imported above). For each palette, you can optionally specify a default, lighter, and darker
+// hue. Available color palettes: https://www.google.com/design/spec/style/color.html
+
+
+$sherpa-primary: (
+  50: #fef1ed,
+  100: #fcddd2,
+  200: #fbc6b4,
+  300: #f9af95,
+  400: #f79e7f,
+  500: #f68d68,
+  600: #f58560,
+  700: #f37a55,
+  800: #f2704b,
+  900: #ef5d3a,
+  A100: #ffffff,
+  A200: #ffffff,
+  A400: #ffdbd4,
+  A700: #ffc7ba,
+    contrast: (
+        50 : #000000,
+        100 : #000000,
+        200 : #000000,
+        300 : #ffffff,
+        400 : #ffffff,
+        500 : #ffffff,
+        600 : #ffffff,
+        700 : #ffffff,
+        800 : #ffffff,
+        900 : #ffffff,∏
+        A100 : #000000,
+        A200 : #ffffff,
+        A400 : #ffffff,
+        A700 : #ffffff,
+    )
+);
+
+$sherpa-secondary: (
+  50 : #eaf7fa,
+  100 : #ccecf3,
+  200 : #aadfeb,
+  300 : #87d2e3,
+  400 : #6ec8dd,
+  500 : #54bed7,
+  600 : #4db8d3,
+  700 : #43afcd,
+  800 : #3aa7c7,
+  900 : #2999be,
+  A100 : #fdffff,
+  A200 : #caf1ff,
+  A400 : #97e4ff,
+  A700 : #7eddff,
+    contrast: (
+        50 : #000000,
+        100 : #000000,
+        200 : #000000,
+        300 : #000000,
+        400 : #000000,
+        500 : #ffffff,
+        600 : #ffffff,
+        700 : #ffffff,
+        800 : #ffffff,
+        900 : #ffffff,
+        A100 : #000000,
+        A200 : #000000,
+        A400 : #000000,
+        A700 : #000000,
+    )
+);
+
+
+
+$sherpa-app-primary: mat-palette($sherpa-primary);
+$sherpa-app-accent:  mat-palette($sherpa-secondary, 300, 700);
+
+// The warn palette is optional (defaults to red).
+$sherpa-app-warn:    mat-palette($mat-red);
+
+// Create the theme object (a Sass map containing all of the palettes).
+$theme: mat-light-theme($sherpa-app-primary, $sherpa-app-accent, $sherpa-app-warn);
+
+// Include theme styles for core and each component used in your app.
+// Alternatively, you can import and @include the theme mixins for each component
+// that you are using.
+@include mat-core-theme($theme);
+  @include mat-autocomplete-theme($theme);
+  @include mat-button-theme($theme);
+  @include mat-button-toggle-theme($theme);
+  @include mat-card-theme($theme);
+  @include mat-checkbox-theme($theme);
+  @include mat-chips-theme($theme);
+  @include mat-table-theme($theme);
+  @include mat-datepicker-theme($theme);
+  @include mat-dialog-theme($theme);
+  @include mat-divider-theme($theme);
+  @include mat-expansion-panel-theme($theme);
+  @include mat-form-field-theme($theme);
+  @include mat-grid-list-theme($theme);
+  @include mat-icon-theme($theme);
+  @include mat-input-theme($theme);
+  @include mat-list-theme($theme);
+  @include mat-menu-theme($theme);
+  @include mat-paginator-theme($theme);
+  @include mat-progress-bar-theme($theme);
+  @include mat-progress-spinner-theme($theme);
+  @include mat-radio-theme($theme);
+  @include mat-select-theme($theme);
+  @include mat-sidenav-theme($theme);
+  @include mat-slide-toggle-theme($theme);
+  @include mat-slider-theme($theme);
+  @include mat-stepper-theme($theme);
+  @include mat-tabs-theme($theme);
+  @include mat-toolbar-theme($theme);
+  @include mat-tooltip-theme($theme);
+  @include mat-snack-bar-theme($theme);
