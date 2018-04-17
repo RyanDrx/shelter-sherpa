@@ -1,17 +1,27 @@
-<h1>New Profile</h1>
-
-<form [formGroup]="ScreenFormGroup" (ngSubmit)="onSubmit()" >
+<form [formGroup]="ScreenFormGroup" (ngSubmit)="onSubmit()">
   <mat-card>
+    <mat-card-title>
+      <span *ngIf="formEditable; else profileHeader">
+        <strong> Create New Profile </strong>
+      </span>
+      <ng-template #profileHeader>
+        <strong> Profile {{ScreenFormGroup.get('FesaID').value}} </strong>
+        <button type="button" style="float:right;" (click)="makeFormEditable()" mat-button color="accent">
+          <mat-icon>edit</mat-icon>
+        </button>
+      </ng-template>
+    </mat-card-title>
+    <mat-divider></mat-divider>
     <mat-card-content>
 
       <div class="question-section" #Details>
-        <div class="form-section-header">
+        <div class="form-section-header" style="margin-top:50px;">
           <h2> Details </h2>
         </div>
         <div class="form-content">
           <div>
-            <mat-form-field >
-              <input matInput placeholder="FESA Identifier" autofocus formControlName="FesaID" required >
+            <mat-form-field>
+              <input matInput placeholder="FESA Identifier" autofocus formControlName="FesaID" required>
             </mat-form-field>
 
             <mat-form-field>
@@ -155,11 +165,10 @@
               How long have you been homeless?
             </p>
             <div>
-              <mat-slider style="width: 28%" #slider max="100" min="0" step="1">
-              </mat-slider>
+
               <span style="margin-top: -25px;">
-                <mat-form-field style="width:25px;">
-                  <input matInput #sliderInput value='{{slider.value}}' disabled formControlName="CurrentLocation" formControlName="HomelessLength">
+                <mat-form-field style="width:45px;">
+                  <input matInput #sliderInput formControlName="CurrentLocation" formControlName="HomelessLength">
                 </mat-form-field>
 
                 <mat-form-field style="width:95px; margin-left: -12px;">
@@ -353,7 +362,7 @@
 
   <br />
 
-  <mat-card>
+  <mat-card *ngIf="formEditable;">
     <mat-card-content>
       <div class="form-actions">
         <span class="center">
@@ -364,4 +373,3 @@
     </mat-card-content>
   </mat-card>
 </form>
-<p>Form value: {{ ScreenFormGroup.value | json}}</p>

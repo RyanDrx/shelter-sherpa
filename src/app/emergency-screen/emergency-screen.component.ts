@@ -1,4 +1,4 @@
-import { Component, OnInit, OnChanges } from '@angular/core';
+import { Component, OnInit, OnChanges, Input } from '@angular/core';
 import {
   FormBuilder,
   FormGroup,
@@ -7,23 +7,25 @@ import {
   FormArray
 } from '@angular/forms';
 
-import { EmergencyScreen } from '../models/emergency-screen';
+import { EmergencyScreen } from './../models/emergency-screen';
 import { FormValues } from './../FormValues';
 import { ParentGuardian } from './../models/parent-guardian';
 import { ProfileService } from './../services/profile.service';
 import { Child } from './../models/child';
+import { Router, ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-emergency-screen',
   templateUrl: './emergency-screen.component.html',
   styleUrls: ['./emergency-screen.component.css']
 })
-export class EmergencyScreenComponent implements OnChanges {
-  public isLinear = false;
+export class EmergencyScreenComponent implements OnChanges, OnInit {
   public ScreenFormGroup: FormGroup;
-  public emergencyScreen: EmergencyScreen;
   public formValues = new FormValues();
-  public formEditable = false;
+  public editingExisting = false;
+
+  @Input() emergencyScreen: EmergencyScreen;
+  @Input() formEditable: boolean;
 
   get parentGuardians(): FormArray {
     return this.ScreenFormGroup.get('parentGuardians') as FormArray;
@@ -33,20 +35,72 @@ export class EmergencyScreenComponent implements OnChanges {
     return this.ScreenFormGroup.get('children') as FormArray;
   }
 
-  public dateNow = new Date();
-
   constructor(
     private _fb: FormBuilder,
-    private _profileService: ProfileService
-  ) {
-    this.createForm();
+    private _profileService: ProfileService,
+    private router: Router,
+    private route: ActivatedRoute
+  ) {}
+
+  ngOnInit(): void {
+    console.log('onInit');
   }
 
   ngOnChanges() {
-    this.rebuildForm();
+    if (this.emergencyScreen == null) {
+      this.createNewForm();
+    } else {
+      console.log('Display existing form data');
+      this.displayFormData(this.emergencyScreen);
+    }
+
+    this.changeFormEditability();
   }
 
-  createForm() {
+  changeFormEditability() {
+    if (this.formEditable) {
+      this.ScreenFormGroup.enable();
+    } else {
+      this.ScreenFormGroup.disable();
+    }
+  }
+
+  displayFormData(screen: EmergencyScreen) {
+    this.ScreenFormGroup = this._fb.group({
+      parentGuardians: this._fb.array([]),
+      children: this._fb.array([]),
+      FesaID: [screen.FesaID, Validators.required],
+      ContactMethod: screen.ContactMethod,
+      ScreenDate: screen.ScreenDate,
+      GeneralNotes: screen.GeneralNotes,
+      Unsheltered: screen.Unsheltered,
+      PlaceToStay: screen.PlaceToStay,
+      HotelMoney: screen.HotelMoney,
+      HomelessLength: screen.HomelessLength,
+      HomelessLengthType: screen.HomelessLengthType,
+      CurrentLocation: screen.CurrentLocation,
+      WhenToLeaveCurrent: screen.WhenToLeaveCurrent,
+      YesterdayLocation: screen.YesterdayLocation,
+      LeaveYesterdayLocationReason: screen.LeaveYesterdayLocationReason,
+      Pregnancy: screen.Pregnancy,
+      Pets: screen.Pets,
+      PetType: screen.PetType,
+      Disabilities: screen.Disabilities,
+      DisabilitiesDescription: screen.DisabilitiesDescription,
+      OtherMedicalNeeds: screen.OtherMedicalNeeds,
+      OtherMedicalNeedsDescription: screen.OtherMedicalNeedsDescription,
+      FleeingPartnerOrFamilyMember: screen.FleeingPartnerOrFamilyMember,
+      CalledDomesticViolenceShelters: screen.CalledDomesticViolenceShelters,
+      DomesticViolenceShelter: screen.DomesticViolenceShelter,
+      StaffMember: screen.StaffMember,
+      Phone: screen.Phone,
+      Email: screen.Email
+    });
+    this.setGuardians(screen.ParentGuardians);
+    this.setChildren(screen.Children);
+  }
+
+  createNewForm() {
     this.ScreenFormGroup = this._fb.group({
       parentGuardians: this._fb.array([]),
       children: this._fb.array([]),
@@ -82,11 +136,28 @@ export class EmergencyScreenComponent implements OnChanges {
 
   onSubmit() {
     this.emergencyScreen = this.prepareEmergencyScreen();
-    this._profileService.createProfile(this.emergencyScreen).subscribe(e => {
-      console.log(e);
-    });
 
-    this.rebuildForm();
+    if (this.editingExisting) {
+      this._profileService.updateProfile(this.emergencyScreen).subscribe(e => {
+        console.log(e);
+      });
+    } else {
+      this._profileService.createProfile(this.emergencyScreen).subscribe(e => {
+        console.log(e);
+      });
+    }
+
+    this.router.navigateByUrl(`/profile`).then(
+      () => {
+        this.router.navigateByUrl(`/profile/${this.emergencyScreen.FesaID}`);
+      });
+    }
+
+
+  makeFormEditable() {
+    this.editingExisting = true;
+    this.formEditable = true;
+    this.changeFormEditability();
   }
 
   addGuardian() {
@@ -100,13 +171,13 @@ export class EmergencyScreenComponent implements OnChanges {
   setGuardians(guardians: ParentGuardian[]) {
     const guardiansFGs = guardians.map(guardian => this._fb.group(guardian));
     const guardiansFormArray = this._fb.array(guardiansFGs);
-    this.ScreenFormGroup.setControl('Guardians', guardiansFormArray);
+    this.ScreenFormGroup.setControl('parentGuardians', guardiansFormArray);
   }
 
   setChildren(children: Child[]) {
     const childrenFGs = children.map(child => this._fb.group(child));
     const childrenFormArray = this._fb.array(childrenFGs);
-    this.ScreenFormGroup.setControl('Children', childrenFormArray);
+    this.ScreenFormGroup.setControl('children', childrenFormArray);
   }
 
   rebuildForm() {
@@ -122,7 +193,7 @@ export class EmergencyScreenComponent implements OnChanges {
   prepareEmergencyScreen(): EmergencyScreen {
     const formModel = this.ScreenFormGroup.value;
 
-    const guardians: ParentGuardian[] = formModel.guardians.map(
+    const guardians: ParentGuardian[] = formModel.parentGuardians.map(
       (parentGuardian: ParentGuardian) => Object.assign({}, parentGuardian)
     );
 

@@ -1,5 +1,5 @@
 import { BrowserModule } from '@angular/platform-browser';
-import { NgModule} from '@angular/core';
+import { NgModule } from '@angular/core';
 import { HttpClientModule } from '@angular/common/http';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
@@ -17,10 +17,21 @@ import { HomeComponent } from './home/home.component';
 import { SidenavComponent } from './sidenav/sidenav.component';
 import { EmergencyScreenComponent } from './emergency-screen/emergency-screen.component';
 import { SearchComponent } from './search/search.component';
-
+import { ProfileComponent } from './profile/profile.component';
+import { SearchResultsComponent } from './search-results/search-results.component';
+import { HighlightPipe } from './pipes/highlight.pipe';
 
 @NgModule({
-  declarations: [AppComponent, HomeComponent, SidenavComponent, EmergencyScreenComponent, SearchComponent],
+  declarations: [
+    AppComponent,
+    HomeComponent,
+    SidenavComponent,
+    EmergencyScreenComponent,
+    SearchComponent,
+    ProfileComponent,
+    SearchResultsComponent,
+    HighlightPipe
+  ],
   imports: [
     BrowserModule,
     BrowserAnimationsModule,
@@ -28,7 +39,7 @@ import { SearchComponent } from './search/search.component';
     FormsModule,
     ReactiveFormsModule,
     HttpClientModule,
-    RouterModule.forRoot(routes, { useHash: true }),
+    RouterModule.forRoot(routes, { useHash: true })
   ],
   providers: [MediaMatcher, ProfileService],
   bootstrap: [AppComponent]

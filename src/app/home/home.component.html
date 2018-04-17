@@ -9,7 +9,7 @@
     </div>
   </div>
   <div class="docs-header-start">
-    <a class="docs-button mat-raised-button" mat-raised-button="" routerLink="/screen">
+    <a class="docs-button mat-raised-button" mat-raised-button="" routerLink="/profile">
       <span class="mat-button-wrapper">Create New Profile</span>
       <div class="mat-button-ripple mat-ripple"></div>
       <div class="mat-button-focus-overlay"></div>
@@ -19,18 +19,14 @@
 </header>
 
 <mat-tab-group>
-  <mat-tab label="One">
-    <h2>Some tab content</h2>
-    <p *ngFor="let content of fillerContent">{{content}}</p>
-  </mat-tab>
-  <mat-tab label="Two">
-    <h2>Some more tab content</h2>
-    <mat-list>
-      <div *ngFor="let content of fillerContent index as i;">
-        <mat-list-item>{{content | slice:i:25}}
-        </mat-list-item>
-        <mat-divider></mat-divider>
+  <mat-tab label="Recent Profiles">
+    <h2>Recently Created Profiles</h2>
+    <div class="results-container" *ngIf="recentProfiles">
+        <app-search-results [searchResults]="recentProfiles" [searchValue]="''"></app-search-results>
       </div>
-    </mat-list>
+  </mat-tab>
+  <mat-tab label="About This App">
+    <h2>About This App</h2>
+
   </mat-tab>
 </mat-tab-group>

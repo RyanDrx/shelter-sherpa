@@ -5,4 +5,5 @@ export class ParentGuardian {
   public MaidenNameAlias = '';
   public DOB: Date = null;
   public Gender = '';
+  public FesaID = '';
 }

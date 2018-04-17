@@ -1,3 +1,17 @@
-<p>
-  search works!
-</p>
+<br />
+<br />
+<mat-card>
+  <mat-card-title>
+    <mat-form-field class="full-width">
+      <input type="text" matInput id="search" #listFilter (keyup)="onKeyUp($event)" placeholder="Search Profiles By Name or FESA ID">
+    </mat-form-field>
+  </mat-card-title>
+  <br />
+  <mat-card-content>
+    <mat-divider></mat-divider>
+    <div class="results-container" *ngIf="searchResults">
+      <app-search-results [searchResults]="searchResults" [searchValue]="searchValue"></app-search-results>
+    </div>
+
+  </mat-card-content>
+</mat-card>

@@ -3,18 +3,12 @@
     <mat-icon>home</mat-icon>
     <span class="navText">Home</span>
   </a>
-  <a mat-list-item routerLink="screen">
+  <a mat-list-item routerLink="profile">
     <mat-icon>assignment</mat-icon>
     <span class="navText">Create</span>
   </a>
-  <a mat-list-item routerLink="home">
+  <a mat-list-item routerLink="search">
     <mat-icon>search</mat-icon>
     <span class="navText">Search</span>
   </a>
-  <mat-nav-list>
-    <a mat-list-item routerLink="." *ngFor="let nav of fillerNav">
-      <mat-icon>link</mat-icon>
-      <span class="navText">{{nav}}</span>
-    </a>
-  </mat-nav-list>
 </mat-nav-list>

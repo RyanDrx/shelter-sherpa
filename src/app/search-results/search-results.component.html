@@ -1,0 +1,52 @@
+<mat-table #table [dataSource]="resultsList" matSort>
+
+  <ng-container matColumnDef="FesaID">
+    <mat-header-cell *matHeaderCellDef mat-sort-header> Fesa ID </mat-header-cell>
+    <mat-cell *matCellDef="let element">
+      <span innerHtml="{{element.FesaID | highlight : searchValue}}"></span>
+    </mat-cell>
+  </ng-container>
+
+  <ng-container matColumnDef="ParentGuardians">
+    <mat-header-cell *matHeaderCellDef mat-sort-header> Parents/Guardians </mat-header-cell>
+    <mat-cell *matCellDef="let element">
+      <div *ngFor="let parent of element.ParentGuardians">
+        <span innerHtml="{{parent.FirstName | highlight : searchValue}}"></span>
+        <span innerHtml="{{parent.LastName | highlight : searchValue}}"></span>
+      </div>
+    </mat-cell>
+  </ng-container>
+
+  <ng-container matColumnDef="Children">
+    <mat-header-cell *matHeaderCellDef mat-sort-header> Children </mat-header-cell>
+    <mat-cell *matCellDef="let element">
+      <div *ngFor="let child of element.Children">
+        <span innerHtml="{{child.FirstName | highlight : searchValue}}"></span>
+        <span innerHtml="{{child.LastName | highlight : searchValue}}"></span>
+      </div>
+    </mat-cell>
+  </ng-container>
+
+  <ng-container matColumnDef="ScreenDate">
+    <mat-header-cell *matHeaderCellDef mat-sort-header> Screen Date </mat-header-cell>
+    <mat-cell *matCellDef="let element">
+      {{element.ScreenDate | date:'short'}}
+    </mat-cell>
+  </ng-container>
+
+  <ng-container matColumnDef="ViewProfile">
+    <mat-header-cell *matHeaderCellDef mat-sort-header> Profile </mat-header-cell>
+    <mat-cell *matCellDef="let element">
+
+      <button routerLink="/profile/{{element.FesaID}}" mat-raised-button color="accent">
+        View Profile
+        <mat-icon style="margin-top: -2px;">chevron_right</mat-icon>
+      </button>
+    </mat-cell>
+  </ng-container>
+
+  <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+  <mat-row *matRowDef="let row; columns: displayedColumns; "></mat-row>
+</mat-table>
+<mat-paginator #paginator [pageSize]="10" [pageSizeOptions]="[5, 10, 20]" [showFirstLastButtons]="true">
+</mat-paginator>
