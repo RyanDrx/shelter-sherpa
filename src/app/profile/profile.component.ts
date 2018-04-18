@@ -25,15 +25,16 @@ export class ProfileComponent implements OnInit {
 
   ngOnInit() {
     this.sub = this.route.params.subscribe(params => {
-      this.fesaID = params['id'];
-      console.log(params);
-
+      this.fesaID = params['id'] || undefined;
       if (this.fesaID) {
         // Existing profile
-        this._profileService.getProfile(this.fesaID).subscribe(screen => {
+        const searchForProfile = this._profileService.getProfile(this.fesaID);
+
+        searchForProfile.subscribe(screen => {
           this.Screen = screen;
           this.Editable = false;
         });
+
       } else {
         // new profile
         this.Screen = null;

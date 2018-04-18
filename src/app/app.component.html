@@ -1,18 +1,23 @@
 <div class="main-container" [class.example-is-mobile]="mobileQuery.matches">
   <mat-toolbar color="primary" class="main-toolbar mat-elevation-z6">
-    <button mat-icon-button (click)="snav.toggle()">
-      <mat-icon *ngIf="!snav.opened" [@rotate]="state">menu</mat-icon>
-      <mat-icon *ngIf="snav.opened" [@rotate]="state">arrow_back</mat-icon>
-    </button>
+    <mat-toolbar-row>
+      <button mat-icon-button (click)="snav.toggle()">
+        <mat-icon *ngIf="!snav.opened" [@rotate]="state">menu</mat-icon>
+        <mat-icon *ngIf="snav.opened" [@rotate]="state">arrow_back</mat-icon>
+      </button>
 
-    <h1 class="main-app-name">
-      <span  style="cursor: pointer;" routerLink="home">Shelter Sherpa
-        <span>
-          <img src="/assets/sherpa-image-test.png" style="height: 41px; margin-bottom: -13px;">
+      <h1 class="main-app-name">
+        <span style="cursor: pointer; margin-left: 10px;" routerLink="home">
+          <!-- <span>
+            <img src="/assets/sherpa-image-small.png" style="height: 41px; margin-bottom: -13px;">
+          </span> -->
+
+          Shelter Sherpa
         </span>
-      </span>
-    </h1>
-
+      </h1>
+      <span class="main-spacer"></span>
+      <app-search-box class="search-container" #searchBox (onSearch)="doSearch($event)" (onFocus)="doSearch($event)"></app-search-box>
+    </mat-toolbar-row>
   </mat-toolbar>
 
   <mat-sidenav-container class="main-sidenav-container" [style.marginTop.px]="mobileQuery.matches ? 56 : 0">

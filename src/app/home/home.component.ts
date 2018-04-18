@@ -13,7 +13,7 @@ export class HomeComponent implements OnInit {
   constructor(private _profileService: ProfileService) {}
 
   ngOnInit() {
-    this._profileService.getProfiles().subscribe(values => {
+    this._profileService.getRecentProfiles().subscribe(values => {
       this.recentProfiles = values;
     });
   }

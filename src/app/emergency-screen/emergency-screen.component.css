@@ -18,9 +18,18 @@ mat-form-field {
 .form-content {
   margin-top: 8px;
 }
-.half-width {
-  width: 46%;
+
+
+.profile-title {
+  background-color: #B15488;
+  color: white;
 }
-.full-width {
-  width: 100%;
+
+.top-search {
+  color: white;
+}
+
+.edit-title {
+  background-color: white;
+  color: black;
 }

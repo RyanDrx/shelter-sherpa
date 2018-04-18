@@ -9,5 +9,4 @@ export const routes: Routes = [
   { path: 'home', component: HomeComponent },
   { path: 'profile/:id', component: ProfileComponent },
   { path: 'profile', component: ProfileComponent },
-  { path: 'search', component: SearchComponent }
 ];

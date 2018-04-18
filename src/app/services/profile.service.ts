@@ -19,8 +19,9 @@ export class ProfileService {
   }
 
   getRecentProfiles(): Observable<EmergencyScreen[]> {
-    const sortedArray = this.sortByScreenDate(emergencyScreens).slice(0, 30);
-    return of(sortedArray).delay(this.delayMs);
+    const sortedArray = this.sortByScreenDate(emergencyScreens);
+    const shortArray = sortedArray.slice(0, 30);
+    return of(shortArray).delay(this.delayMs);
   }
 
   private getTime(date?: Date) {
@@ -29,52 +30,50 @@ export class ProfileService {
 
   public sortByScreenDate(array: EmergencyScreen[]): EmergencyScreen[] {
     return array.sort((a: EmergencyScreen, b: EmergencyScreen) => {
-      return this.getTime(a.ScreenDate) - this.getTime(b.ScreenDate);
+      return this.getTime(b.ScreenDate) - this.getTime(a.ScreenDate);
     });
   }
 
   searchProfiles(searchTerm: string): Observable<EmergencyScreen[]> {
-    let foundProfiles = emergencyScreens.filter(
-      p => p.FesaID.toLowerCase() === searchTerm.toLowerCase()
+    const foundProfiles: EmergencyScreen[] = [];
+
+    const matchFesaIds = emergencyScreens.filter(p =>
+      p.FesaID.toLowerCase().includes(searchTerm.toLowerCase())
     );
 
-    if (foundProfiles.length === 0) {
-      foundProfiles = emergencyScreens.filter(p =>
-        p.FesaID.toLowerCase().includes(searchTerm.toLowerCase())
-      );
-      if (foundProfiles.length === 0) {
-        foundProfiles = emergencyScreens.filter(s => {
-          let returnVal = false;
+    const matchNames = emergencyScreens.slice().filter(s => {
+      let returnVal = false;
+      s.Children.filter(c => {
+        if (c.FirstName.toLowerCase().includes(searchTerm.toLowerCase())) {
+          returnVal = true;
+        }
+        if (c.LastName.toLowerCase().includes(searchTerm.toLowerCase())) {
+          returnVal = true;
+        }
+      });
 
-          s.Children.filter(c => {
-            if (c.FirstName.toLowerCase().includes(searchTerm.toLowerCase())) {
-              returnVal = true;
-            }
-            if (c.LastName.toLowerCase().includes(searchTerm.toLowerCase())) {
-              returnVal = true;
-            }
-          });
+      s.ParentGuardians.filter(p => {
+        if (p.FirstName.toLowerCase().includes(searchTerm.toLowerCase())) {
+          returnVal = true;
+        }
+        if (p.LastName.toLowerCase().includes(searchTerm.toLowerCase())) {
+          returnVal = true;
+        }
+      });
 
-          s.ParentGuardians.filter(p => {
-            if (p.FirstName.toLowerCase().includes(searchTerm.toLowerCase())) {
-              returnVal = true;
-            }
-            if (p.LastName.toLowerCase().includes(searchTerm.toLowerCase())) {
-              returnVal = true;
-            }
-          });
+      return returnVal;
+    });
 
-          return returnVal;
-        });
-      }
-    }
-    return of(foundProfiles).delay(this.delayMs);
+   const searchResults = foundProfiles.concat(matchFesaIds || []).concat(matchNames || []);
+
+    return of(searchResults).delay(this.delayMs);
   }
 
-  getProfile(FesaId: string): Observable<EmergencyScreen> {
+  getProfile(fesaId: string): Observable<EmergencyScreen> {
     try {
-      const foundProfile = emergencyScreens.find(p => p.FesaID === FesaId);
-      console.log(foundProfile);
+      const foundProfile = emergencyScreens.find(p => {
+        return p.FesaID === fesaId;
+      });
       if (foundProfile !== null && foundProfile !== undefined) {
         return of(foundProfile).delay(this.delayMs);
       }

@@ -38,7 +38,7 @@
     <mat-header-cell *matHeaderCellDef mat-sort-header> Profile </mat-header-cell>
     <mat-cell *matCellDef="let element">
 
-      <button routerLink="/profile/{{element.FesaID}}" mat-raised-button color="accent">
+      <button (click)="goToProfile(element.FesaID)" routerLink="/profile/{{element.FesaID}}" mat-raised-button color="accent">
         View Profile
         <mat-icon style="margin-top: -2px;">chevron_right</mat-icon>
       </button>

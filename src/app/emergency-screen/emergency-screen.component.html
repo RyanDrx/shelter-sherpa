@@ -1,21 +1,40 @@
+<br/>
 <form [formGroup]="ScreenFormGroup" (ngSubmit)="onSubmit()">
-  <mat-card>
-    <mat-card-title>
-      <span *ngIf="formEditable; else profileHeader">
+<mat-card [ngClass]="getTitleClass()">
+  <mat-card-title>
+    <span *ngIf="formEditable; else profileHeader">
+      <span *ngIf="!editingExisting; else profileHeader">
         <strong> Create New Profile </strong>
-      </span>
-      <ng-template #profileHeader>
-        <strong> Profile {{ScreenFormGroup.get('FesaID').value}} </strong>
-        <button type="button" style="float:right;" (click)="makeFormEditable()" mat-button color="accent">
-          <mat-icon>edit</mat-icon>
-        </button>
-      </ng-template>
-    </mat-card-title>
-    <mat-divider></mat-divider>
-    <mat-card-content>
+        <div class="right" style="margin-top: -5px">
 
+          <button type="submit" [disabled]="ScreenFormGroup.pristine" mat-raised-button color="accent">Save</button> &nbsp;
+          <button type="button" [disabled]="ScreenFormGroup.pristine" (click)="revert()" mat-raised-button color="warn">Revert</button>
+        </div>
+      </span>
+    </span>
+    <ng-template #profileHeader>
+      <span>
+        <strong> {{ScreenFormGroup.get('parentGuardians').value[0].FirstName}} {{ScreenFormGroup.get('parentGuardians').value[0].LastName}}
+        </strong>
+        <div class="right" style="margin-top: -5px">
+
+          <button type="button" (click)="makeFormEditable()" mat-button color="white" *ngIf="!editingExisting">
+            <mat-icon>edit</mat-icon>
+          </button>
+          <button type="submit" [disabled]="ScreenFormGroup.pristine" mat-raised-button color="accent" *ngIf="editingExisting">Save</button> &nbsp;
+          <button type="button" (click)="revert()" mat-raised-button color="warn" *ngIf="editingExisting">Revert</button>
+        </div>
+      </span>
+    </ng-template>
+  </mat-card-title>
+</mat-card>
+
+<br />
+
+  <mat-card>
+    <mat-card-content>
       <div class="question-section" #Details>
-        <div class="form-section-header" style="margin-top:50px;">
+        <div class="form-section-header">
           <h2> Details </h2>
         </div>
         <div class="form-content">
@@ -60,7 +79,7 @@
               <h2 style="display: inline;">
                 Parent/Guardians
               </h2>
-              <button type="button" style="float:right;" (click)="addGuardian()" mat-mini-fab color="accent">
+              <button type="button" style="float:right;" (click)="addGuardian()" mat-mini-fab color="accent" *ngIf="formEditable">
                 <mat-icon>add</mat-icon>
               </button>
             </div>
@@ -108,7 +127,7 @@
               <h2 style="display: inline; ">
                 Children
               </h2>
-              <button type="button" style="float:right;" (click)="addChild()" mat-mini-fab color="accent">
+              <button type="button" style="float:right;" (click)="addChild()" mat-mini-fab color="accent" *ngIf="formEditable">
                 <mat-icon>add</mat-icon>
               </button>
             </div>
@@ -316,14 +335,13 @@
               <textarea matInput placeholder="Additional Notes" formControlName="GeneralNotes"></textarea>
             </mat-form-field>
           </div>
-          <div>
-            <mat-form-field>
-              <input matInput placeholder="Staff Name" formControlName="StaffMember" required>
-            </mat-form-field>
-          </div>
         </div>
       </div>
-
+      <div>
+        <mat-form-field>
+          <input matInput placeholder="Staff Name" formControlName="StaffMember" required>
+        </mat-form-field>
+      </div>
     </mat-card-content>
   </mat-card>
 
@@ -361,15 +379,10 @@
   </div>
 
   <br />
+  <div *ngIf="formEditable;" class="bottom-right-fab">
+    <button mat-fab type="submit" [disabled]="ScreenFormGroup.pristine" color="accent">
+      <mat-icon>save</mat-icon>
+    </button>
+  </div>
 
-  <mat-card *ngIf="formEditable;">
-    <mat-card-content>
-      <div class="form-actions">
-        <span class="center">
-          <button type="submit" mat- [disabled]="ScreenFormGroup.pristine" mat-raised-button color="accent">Save</button> &nbsp;
-          <button type="button" (click)="revert()" [disabled]="ScreenFormGroup.pristine" mat-raised-button color="warn">Revert</button>
-        </span>
-      </div>
-    </mat-card-content>
-  </mat-card>
 </form>

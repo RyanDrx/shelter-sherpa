@@ -1,17 +1,18 @@
-<br />
-<br />
-<mat-card>
-  <mat-card-title>
-    <mat-form-field class="full-width">
-      <input type="text" matInput id="search" #listFilter (keyup)="onKeyUp($event)" placeholder="Search Profiles By Name or FESA ID">
-    </mat-form-field>
-  </mat-card-title>
-  <br />
-  <mat-card-content>
+<div mat-dialog-title>
+    <div style="width:100%; height: 100px;">
+      <mat-form-field class="left most-width">
+        <input type="text" matInput [(ngModel)]="searchInput" (keyup)="onKeyUp($event)" placeholder="Search Profiles By Name or FESA ID">
+      </mat-form-field>
+      <div class="right" style="width:10%">
+        <button mat-icon-button color="primary" (click)="submitSearch()">
+          <mat-icon>search</mat-icon>
+        </button>
+      </div>
+   </div>
+</div>
+<div mat-dialog-content>
+  <div class="results-container" *ngIf="searchResults">
     <mat-divider></mat-divider>
-    <div class="results-container" *ngIf="searchResults">
-      <app-search-results [searchResults]="searchResults" [searchValue]="searchValue"></app-search-results>
-    </div>
-
-  </mat-card-content>
-</mat-card>
+    <app-search-results [dialogRef]="dialogRef" [searchResults]="searchResults" [searchValue]="searchValue"></app-search-results>
+  </div>
+</div>

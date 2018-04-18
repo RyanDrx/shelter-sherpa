@@ -1,5 +1,10 @@
 import { MediaMatcher } from '@angular/cdk/layout';
-import { ChangeDetectorRef, Component, OnDestroy } from '@angular/core';
+import {
+  ChangeDetectorRef,
+  Component,
+  OnDestroy,
+  ViewChild
+} from '@angular/core';
 import {
   trigger,
   transition,
@@ -8,6 +13,10 @@ import {
   style
 } from '@angular/animations';
 import { rotateIn, zoomIn } from 'ng-animate';
+import { SearchService } from './services/search.service';
+import { Router } from '@angular/router';
+import { SearchComponent } from './search/search.component';
+import { MatDialog } from '@angular/material';
 
 @Component({
   selector: 'app-root',
@@ -38,13 +47,37 @@ export class AppComponent implements OnDestroy {
   title = 'app';
   mobileQuery: MediaQueryList;
 
-
   private _mobileQueryListener: () => void;
 
-  constructor(changeDetectorRef: ChangeDetectorRef, media: MediaMatcher) {
+  constructor(
+    changeDetectorRef: ChangeDetectorRef,
+    media: MediaMatcher,
+    public dialog: MatDialog,
+    private _searchService: SearchService,
+    private _router: Router
+  ) {
     this.mobileQuery = media.matchMedia('(max-width: 600px)');
     this._mobileQueryListener = () => changeDetectorRef.detectChanges();
     this.mobileQuery.addListener(this._mobileQueryListener);
+  }
+
+  openDialog(): void {
+    const dialogRef = this.dialog.open(SearchComponent, {
+      width: '60%'
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      this._searchService.searchQueryChange.next(null);
+    });
+  }
+
+  doSearch(query: string) {
+    if (query !== null && query.match(/^ *$/) === null && query.length > 1) {
+      this._searchService.searchQueryChange.next(query);
+      if (this.dialog.openDialogs.length === 0) {
+        this.openDialog();
+      }
+    }
   }
 
   toggleState(navOpen: boolean) {

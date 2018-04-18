@@ -47,13 +47,16 @@ export class EmergencyScreenComponent implements OnChanges, OnInit {
   }
 
   ngOnChanges() {
+    this.setFormType();
+  }
+
+  setFormType() {
     if (this.emergencyScreen == null) {
       this.createNewForm();
     } else {
       console.log('Display existing form data');
       this.displayFormData(this.emergencyScreen);
     }
-
     this.changeFormEditability();
   }
 
@@ -102,10 +105,10 @@ export class EmergencyScreenComponent implements OnChanges, OnInit {
 
   createNewForm() {
     this.ScreenFormGroup = this._fb.group({
-      parentGuardians: this._fb.array([]),
+      parentGuardians: this._fb.array([], Validators.required),
       children: this._fb.array([]),
       FesaID: ['', Validators.required],
-      ContactMethod: '',
+      ContactMethod: ['', Validators.required],
       ScreenDate: new Date(),
       GeneralNotes: '',
       Unsheltered: false,
@@ -147,12 +150,10 @@ export class EmergencyScreenComponent implements OnChanges, OnInit {
       });
     }
 
-    this.router.navigateByUrl(`/profile`).then(
-      () => {
-        this.router.navigateByUrl(`/profile/${this.emergencyScreen.FesaID}`);
-      });
-    }
-
+    this.router.navigateByUrl(`/profile`).then(() => {
+      this.router.navigateByUrl(`/profile/${this.emergencyScreen.FesaID}`);
+    });
+  }
 
   makeFormEditable() {
     this.editingExisting = true;
@@ -181,13 +182,19 @@ export class EmergencyScreenComponent implements OnChanges, OnInit {
   }
 
   rebuildForm() {
-    this.ScreenFormGroup.reset();
-    this.setGuardians([new ParentGuardian()]);
+    this.setFormType();
     console.log('rebuild form');
   }
 
   revert() {
     this.rebuildForm();
+  }
+
+  getTitleClass() {
+    if (!this.formEditable) {
+      return 'profile-title';
+    }
+    return 'edit-title';
   }
 
   prepareEmergencyScreen(): EmergencyScreen {
@@ -202,7 +209,7 @@ export class EmergencyScreenComponent implements OnChanges, OnInit {
     );
 
     const saveEmergencyScreen: EmergencyScreen = {
-      FesaID: formModel.FesaID,
+      FesaID: formModel.FesaID.toUpperCase(),
       ContactMethod: formModel.ContactMethod as string,
       ScreenDate: formModel.ScreenDate,
       GeneralNotes: formModel.GeneralNotes,
